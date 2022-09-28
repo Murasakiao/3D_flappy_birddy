@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/Birddy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/sky panorama_3.png" type="Texture" id=2]
+[ext_resource path="res://scenes/World.gd" type="Script" id=3]
+
+[sub_resource type="PanoramaSky" id=1]
+panorama = ExtResource( 2 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+background_sky_orientation = Basis( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1 )
+ambient_light_color = Color( 0.745098, 0.396078, 0.396078, 1 )
+fog_color = Color( 0.027451, 0.152941, 0.278431, 1 )
+fog_sun_color = Color( 0, 0, 0, 1 )
+
+[node name="World" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="Birddy" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3325, 0, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

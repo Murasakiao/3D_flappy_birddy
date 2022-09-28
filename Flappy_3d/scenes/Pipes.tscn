@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/Pipes.gd" type="Script" id=1]
+[ext_resource path="res://greenPipes.tres" type="Material" id=2]
+
+[sub_resource type="CylinderMesh" id=1]
+height = 20.0
+
+[sub_resource type="CylinderShape" id=2]
+height = 20.0
+
+[sub_resource type="CylinderMesh" id=3]
+
+[sub_resource type="CylinderShape" id=4]
+height = 6.7806
+
+[node name="Pipes" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Upper" type="Area" parent="."]
+transform = Transform( 1.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12, 0 )
+
+[node name="pipe" type="MeshInstance" parent="Upper"]
+material_override = ExtResource( 2 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Upper"]
+shape = SubResource( 2 )
+
+[node name="Head" type="MeshInstance" parent="Upper"]
+transform = Transform( 1.2, 0, 0, 0, 0.7, 0, 0, 0, 1, 0, 9.32941, 0 )
+material_override = ExtResource( 2 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Lower" type="Area" parent="."]
+transform = Transform( 1.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0 )
+
+[node name="pipe" type="MeshInstance" parent="Lower"]
+material_override = ExtResource( 2 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Lower"]
+shape = SubResource( 2 )
+
+[node name="Head" type="MeshInstance" parent="Lower"]
+transform = Transform( 1.2, 0, 0, 0, 0.7, 0, 0, 0, 1, 0, -9.37179, 0 )
+material_override = ExtResource( 2 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="ScoreArea" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="ScoreArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.393161, 0 )
+shape = SubResource( 4 )
+
+[connection signal="body_entered" from="Upper" to="." method="_body_entered"]
+[connection signal="body_entered" from="Lower" to="." method="_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
